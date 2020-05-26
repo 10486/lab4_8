@@ -22,8 +22,35 @@ Note* input_struct() {
 	scanf("%s", &data->second_name);
 	printf("Введите номер телефона(максимум %d цифр): ", PHONE_NUMBER_LENGTH);
 	scanf("%s", &data->phone);
+	char flag;
+	for (size_t i = 0; i < PHONE_NUMBER_LENGTH; i++)
+	{
+		if (data->phone[i] == '\0')break;
+		flag = 0;
+		for (size_t j = 0; j < 10; j++)
+		{
+			if (data->phone[i] == ('0' + j))flag = 1;
+		}
+		if (data->phone[i] == '-')flag = 1;
+		if (!flag) {
+			printf("Все хуйня двай по новой");
+			exit(1);
+		}
+	}
 	printf("Введите дату рождения дд.мм.гггг (через точки): ");
 	scanf("%d.%d.%d", &data->birthday[0], &data->birthday[1], &data->birthday[2]);
+	if (data->birthday[0] > 31 || data->birthday[0] < 0) {
+		printf("Все хуйня двай по новой");
+		exit(1);
+	}
+	if (data->birthday[1] > 12 || data->birthday[1] < 0) {
+		printf("Все хуйня двай по новой");
+		exit(1);
+	}
+	if (data->birthday[2] < 0) {
+		printf("Все хуйня двай по новой");
+		exit(1);
+	}
 	return data;
 }
 // Вывод структуры
@@ -34,10 +61,10 @@ void output_struct(Note* data) {
 	printf("Дата рождения : %d.%d.%d\n", data->birthday[0], data->birthday[1], data->birthday[2]);
 	return;
 }
-// Сравнению по алфавиту (сначала имя потом фамилия)
+// Сравнению по алфавиту (сначала фамилия потом имя)
 int compare_by_names(const Note* first, const Note* second) {
-	char compare_by_name = strcmp(first->first_name, second->first_name);
-	return (compare_by_name ? compare_by_name : strcmp(first->second_name, second->second_name));
+	char compare_by_second_name = strcmp(first->second_name, second->second_name);
+	return (compare_by_second_name ? compare_by_second_name : strcmp(first->first_name, second->first_name));
 }
 #pragma endregion
 #pragma region List
@@ -120,7 +147,7 @@ void main() {
 	find_in_list(list, input);
 	printf("----------------------------------------------\n");
 	//Выводим все структуры
-	printf("Все структуры:\n");
+	printf("ВСЕ СТРУКТУРЫ КОТОРЫЕ ЕСТЬ В СПИСКЕ В ТОМ ПОРЯДКЕ КАК ИХ ОТСОРТИРОВАЛИ,\nВСЕ СТРУКТУРЫ ПО ЗАПРОСУ БЫЛИ ВЫВЕДЕНЫ ВЫШЕ:\n");
 	for (Node* tmp = list->head; tmp != NULL; tmp = tmp->next)
 	{
 		output_struct(tmp->data);
