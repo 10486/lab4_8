@@ -77,6 +77,12 @@ int main() {
 		// вводим структуру
 		arr[counter] = input_struct();
 		counter++;
+		printf("Все структуры:\n");
+		for (size_t i = 0; i < counter; i++)
+		{
+			printf("----------------------------------------------\n");
+			output_struct(arr[i]);
+		}
 		printf("продолжить ввод (1-да, 0-нет)\n");
 		scanf("%d", &tmp);
 	} while (tmp);

@@ -138,6 +138,12 @@ void main() {
 		// Добавляем в список
 		append(list, t);
 		counter++;
+		printf("ВСЕ СТРУКТУРЫ КОТОРЫЕ ЕСТЬ В СПИСКЕ В ТОМ ПОРЯДКЕ КАК ИХ ОТСОРТИРОВАЛИ:\n");
+		for (Node* tmp = list->head; tmp != NULL; tmp = tmp->next)
+		{
+			output_struct(tmp->data);
+			printf("----------------------------------------------\n");
+		}
 		printf("Продолжить ввод (1-да, 0-нет)\n");
 		scanf("%d", &tmp);
 	} while (tmp);
